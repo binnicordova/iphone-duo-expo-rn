@@ -24,7 +24,9 @@ jobs:
           bun-version: latest
 
       # npm does the publishing even though bun does the installing: provenance
-      # and the npmjs auth token are npm-CLI features.
+      # and the npmjs auth token are npm-CLI features. Node also runs the
+      # checks below, because `bun run` shims `node` and jest-expo's setup
+      # needs the real one.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -34,13 +36,13 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Lint
-        run: bun run lint
+        run: npm run lint
 
       - name: Test
-        run: bun run test
+        run: npm test
 
       - name: Build
-        run: bun run build
+        run: npm run build
 
       - name: Verify the tag matches package.json
         if: github.event_name == 'release'

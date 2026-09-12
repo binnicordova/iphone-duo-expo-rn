@@ -15,16 +15,21 @@ jobs:
         with:
           bun-version: latest
 
-      # The repository's lockfile is bun's, so a frozen bun install is the only
-      # reproducible option here. Publishing still goes through npm.
+      # bun installs (the repository's lockfile is bun's) but Node runs the
+      # scripts: `bun run` puts its own `node` shim on PATH, and jest-expo's
+      # setup needs the real thing.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Install
         run: bun install --frozen-lockfile
 
       - name: Lint
-        run: bun run lint
+        run: npm run lint
 
       - name: Test
-        run: bun run test
+        run: npm test
 
       - name: Build
-        run: bun run build
+        run: npm run build
