@@ -51,10 +51,20 @@
     "typescript": "^5.9.2"
   },
   "jest": {
-    "preset": "jest-expo",
+    "testEnvironment": "node",
     "roots": [
       "<rootDir>/src"
-    ]
+    ],
+    "transform": {
+      "^.+\\.[jt]sx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            "babel-preset-expo"
+          ]
+        }
+      ]
+    }
   },
   "peerDependencies": {
     "expo": ">=57.0.0",
