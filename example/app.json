@@ -8,6 +8,12 @@
     "userInterfaceStyle": "light",
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.binnicordova.iphoneduoexpornexample"
+    },
+    "android": {
+      "package": "com.binnicordova.iphoneduoexpornexample"
     }
   }
 }

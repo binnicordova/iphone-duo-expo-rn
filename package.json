@@ -1,7 +1,7 @@
 {
   "name": "iphone-duo-expo-rn",
-  "version": "0.0.1",
-  "description": "iPhone Duo animation on your app, by binnicordova.com",
+  "version": "0.1.0",
+  "description": "The iPhone \"Duo\" frosted-glass fold effect for any Expo app - TypeScript only, no native code.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -14,14 +14,25 @@
   "keywords": [
     "react-native",
     "expo",
+    "expo-router",
     "iphone-duo-expo-rn",
-    "IphoneDuoExpoRn"
+    "IphoneDuoExpoRn",
+    "duo",
+    "fold",
+    "frosted-glass",
+    "parallax",
+    "tilt",
+    "device-motion",
+    "animation"
   ],
-  "repository": "https://github.com/binnicordova/iphone-duo-expo-rn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binnicordova/iphone-duo-expo-rn.git"
+  },
   "bugs": {
     "url": "https://github.com/binnicordova/iphone-duo-expo-rn/issues"
   },
-  "author": "Binni Cordova <binni.2000.cordova@gmail.com> (binnicordova)",
+  "author": "Binni Cordova <binni.2000.cordova@gmail.com> (https://binnicordova.com)",
   "license": "MIT",
   "homepage": "https://github.com/binnicordova/iphone-duo-expo-rn#readme",
   "dependencies": {},
@@ -40,14 +51,43 @@
     "typescript": "^5.9.2"
   },
   "jest": {
-    "preset": "jest-expo",
+    "testEnvironment": "node",
     "roots": [
       "<rootDir>/src"
-    ]
+    ],
+    "transform": {
+      "^.+\\.[jt]sx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            "babel-preset-expo"
+          ]
+        }
+      ]
+    }
   },
   "peerDependencies": {
-    "expo": "*",
+    "expo": ">=57.0.0",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "expo-blur": "*",
+    "expo-linear-gradient": "*",
+    "expo-sensors": "*"
+  },
+  "sideEffects": false,
+  "peerDependenciesMeta": {
+    "expo-blur": {
+      "optional": true
+    },
+    "expo-linear-gradient": {
+      "optional": true
+    },
+    "expo-sensors": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

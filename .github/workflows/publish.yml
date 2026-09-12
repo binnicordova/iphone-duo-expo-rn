@@ -1,0 +1,60 @@
+name: Publish to npm
+
+# Publishing is driven by GitHub Releases: tag a commit, write the notes, and
+# the release event ships exactly that tree. `workflow_dispatch` is here to
+# re-run a publish that failed after the release was already cut.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Required for npm provenance, which links the published tarball back to
+      # the exact commit and workflow run that produced it.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # npm does the publishing even though bun does the installing: provenance
+      # and the npmjs auth token are npm-CLI features. Node also runs the
+      # checks below, because `bun run` shims `node` and jest-expo's setup
+      # needs the real one.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify the tag matches package.json
+        if: github.event_name == 'release'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Release tag v$TAG does not match package.json version $PKG" >&2
+            exit 1
+          fi
+
+      - name: Publish
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
