@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "iphone-duo-expo-rn": ["../src/index"],
+      "iphone-duo-expo-rn/*": ["../src/*"]
+    }
+  }
+}
