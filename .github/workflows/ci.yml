@@ -20,7 +20,11 @@ jobs:
       # setup needs the real thing.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 LTS, not 20: on Node 20 the fetch/Response globals are installed
+          # lazily, they do not survive jest's sandbox, and jest-expo's setup
+          # loads Expo's winter runtime, which does `class FetchResponse
+          # extends Response`.
+          node-version: 22
 
       - name: Install
         run: bun install --frozen-lockfile

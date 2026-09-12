@@ -29,7 +29,11 @@ jobs:
       # needs the real one.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 LTS, not 20: on Node 20 the fetch/Response globals are installed
+          # lazily, they do not survive jest's sandbox, and jest-expo's setup
+          # loads Expo's winter runtime, which does `class FetchResponse
+          # extends Response`.
+          node-version: 22
           registry-url: https://registry.npmjs.org
 
       - name: Install
