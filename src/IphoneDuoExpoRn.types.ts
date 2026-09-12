@@ -1,1 +1,1 @@
-// Define your exported module types here.
+export type IphoneDuoExpoRnModule = Record<string, never>;

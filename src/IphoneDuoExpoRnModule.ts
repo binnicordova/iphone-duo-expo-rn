@@ -1,5 +1,3 @@
-import { NativeModule, requireNativeModule } from 'expo';
+const IphoneDuoExpoRnModule = {};
 
-declare class IphoneDuoExpoRnModule extends NativeModule<{}> {}
-
-export default requireNativeModule<IphoneDuoExpoRnModule>('IphoneDuoExpoRn');
+export default IphoneDuoExpoRnModule;

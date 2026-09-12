@@ -1,9 +1,0 @@
-{
-  "platforms": ["apple", "android", "web"],
-  "apple": {
-    "modules": ["IphoneDuoExpoRnModule"]
-  },
-  "android": {
-    "modules": ["expo.modules.iphoneduoexporn.IphoneDuoExpoRnModule"]
-  }
-}
